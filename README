@@ -1,1 +1,2 @@
-This file was created by IntelliJ IDEA 11.1.4 for binding GitHub repository
+Small, highly concurrent, game score server using embedded Jetty that shows how to decouple read & write sides with a blocking queue for fast writing and reading.
+
