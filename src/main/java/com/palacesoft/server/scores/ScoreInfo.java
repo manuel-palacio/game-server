@@ -14,6 +14,9 @@ public final class ScoreInfo implements Comparable<ScoreInfo> {
 
     public ScoreInfo(Integer level, Integer userId, Integer score) {
 
+        if(score < 0){
+            throw new IllegalArgumentException("Cannot accept negative scores");
+        }
         this.level = level;
         this.userId = userId;
         this.score = score;

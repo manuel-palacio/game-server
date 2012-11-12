@@ -6,6 +6,9 @@ import static com.jayway.restassured.RestAssured.expect
 import static com.jayway.restassured.RestAssured.get
 import static org.eclipse.jetty.http.HttpStatus.OK_200
 import static org.hamcrest.CoreMatchers.equalTo
+import org.apache.http.HttpStatus
+
+import static org.apache.http.HttpStatus.SC_BAD_REQUEST
 
 class ScoreIT extends AbstractIT {
 
@@ -27,6 +30,11 @@ class ScoreIT extends AbstractIT {
     public void post_with_no_score_does_nothing() {
         expect() statusCode OK_200 when() post "/6/score?sessionKey=${sessionKey}"
 
+    }
+
+    @Test(dependsOnMethods = "login")
+    public void post_with_negative_score_is_rejected() {
+        expect() statusCode SC_BAD_REQUEST with() body -3 when() post "/6/score?sessionKey=${sessionKey}"
     }
 
     @Test

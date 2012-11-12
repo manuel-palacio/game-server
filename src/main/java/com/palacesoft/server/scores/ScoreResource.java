@@ -1,17 +1,12 @@
 package com.palacesoft.server.scores;
 
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import static java.util.logging.Logger.*;
+import java.io.BufferedReader;
+import java.io.IOException;
 
 /**
  * End point for posting scores to server
@@ -19,9 +14,6 @@ import static java.util.logging.Logger.*;
  * @author Manuel Palacio
  */
 public class ScoreResource extends HttpServlet {
-
-
-    private static final Logger logger = getLogger(ScoreResource.class.getPackage().getName());
 
     private ScoreService defaultScoreService;
 
@@ -38,13 +30,15 @@ public class ScoreResource extends HttpServlet {
 
         try (BufferedReader bufferedReader = req.getReader()) {
             Integer userId = (Integer) req.getAttribute("userId");
-            int score;
             try {
-                score = Integer.parseInt(bufferedReader.readLine());
-                ScoreInfo scoreInfo = new ScoreInfo(level, userId, score);
-                defaultScoreService.saveScore(scoreInfo);
-            } catch (Exception e) {
-                logger.log(Level.WARNING, "Could not save score", e);
+                String line = bufferedReader.readLine();
+                if (line != null) {
+                    Integer score = Integer.parseInt(line);
+                    ScoreInfo scoreInfo = new ScoreInfo(level, userId, score);
+                    defaultScoreService.saveScore(scoreInfo);
+                }
+            } catch (IllegalArgumentException e) {
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             }
         }
     }
