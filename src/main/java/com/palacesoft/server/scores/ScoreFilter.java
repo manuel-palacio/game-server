@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ScoreFilter implements Filter {
 
-    private ConcurrentHashMap<String, UserInfo> userSessions = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<String, UserInfo> userSessions = new ConcurrentHashMap<>(8, 0.9f, 1);
 
     private ScheduledExecutorService executor;
 

@@ -25,7 +25,7 @@ public class DefaultScoreService implements ScoreService {
 
     private BlockingQueue<ScoreInfo> postQueue = new LinkedBlockingQueue<>();
 
-    private Map<Integer, Map<Integer, NavigableSet<Integer>>> scoreData = new ConcurrentHashMap<>();
+    private Map<Integer, Map<Integer, NavigableSet<Integer>>> scoreData = new ConcurrentHashMap<>(8, 0.9f, 1);
 
     private Map<Integer, byte[]> highScores = new ConcurrentHashMap<>();
 
